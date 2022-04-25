@@ -1,9 +1,13 @@
+import csv
+from datetime import datetime
+import MasterMerchant_helper as mm
 from tkinter import *
 from tkinter import ttk
-from datetime import datetime
 from tkinter.filedialog import askdirectory, asksaveasfilename
-import mm_helper as mm
-import csv
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 now = datetime.now()
 today = datetime.strftime(now, '%Y-%m-%d')
@@ -37,6 +41,7 @@ def execute():
     enrichedPurchaseData = mm.enrichSalesData(dataFolder, salesData)
 
     for item in enrichedPurchaseData:
+        window.update_idletasks()
         item.pop('listingFee')
         item.pop('guildTax')
         item.pop('zosTax')
@@ -54,6 +59,8 @@ def execute():
         w.writeheader()
         for sale in enrichedPurchaseData:
             w.writerow(sale)
+
+    logger.info('Export Completed.')
     return True
 
 window=Tk()
@@ -96,8 +103,5 @@ executeLabel = Label(window, text='3. Execute:')
 executeLabel.grid(row=9, column=1, sticky='W')
 execute_button=Button(window,text="Execute", height=2, width=10, command=execute)
 execute_button.grid(row=10,column=1, rowspan=1, sticky='W')
-
-#logText=Text(window, height=1, width=40, wrap='none')
-#logText.grid(row=1, column=13, rowspan=10, sticky='NWSE')
 
 window.mainloop()
