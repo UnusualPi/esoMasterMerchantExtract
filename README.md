@@ -1,5 +1,5 @@
 # esoMasterMerchantExtract
-Used to extract data from the Elder Scrolls Online add-on Master Merchant.
+A very simple utility application used to extract data from the Elder Scrolls Online add-on Master Merchant and create a CSV file.
 # Step 1:
 Select your ESO "SavedVariables" folder. Usually in `C:\Users\Your User Name\Documents\Elder Scrolls Online\live`
 # Step 2:
