@@ -20,9 +20,6 @@ def selectVariablesFolder():
 
 def selectSaveLocation():
     global outFolder
-    #global outFile
-    #filetypes=(("CSV files","*.csv"),("all files","*.*"))
-    #outFile=asksaveasfilename(filetypes=filetypes,defaultextension='.csv')
     outFolder = askdirectory()
     saveText.insert(END, "{}".format(outFolder))
     return outFolder
@@ -75,7 +72,6 @@ aboutmenu.add_command(label="About", command=aboutWindow)
 menubar.add_cascade(label="File", menu=filemenu)
 window.config(menu=menubar)
 
-#window.geometry("800x500")
 window.wm_title("MasterMerchant Data Extractor")
 window.grid_rowconfigure(0, weight=1, minsize=10) #Top Buffer
 window.grid_rowconfigure(4, weight=1, minsize=20) #Break
