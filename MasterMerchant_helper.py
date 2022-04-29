@@ -198,9 +198,10 @@ def enrichSalesData(dataFolder, salesData):
         sale['hyperlink'] = 'http://esoitem.uesp.net/itemLink.php?link='+str(sale['itemId'])
         try:
             sale['itemShortId'] = int(re.search('item:(\d*)', str(sale['itemLink'])).group(1))
-        except as e:
-            logger.error('Error encountered while creating itemShortId: {}'.format(e))
-            sales['itemShortId'] = None
+        except Exception as e:
+            logger.warning('Error encountered while creating itemShortId: {}'.format(e))
+            logger.info('Error record: {}'.format(sale))
+            sale['itemShortId'] = None
 
     logger.info('Sorting dicts...')
     for sale in salesData:
