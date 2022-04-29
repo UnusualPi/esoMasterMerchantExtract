@@ -35,7 +35,7 @@ def execute():
     salesData = mm.getSalesData(dataFolder)
     enrichedSalesData = mm.enrichSalesData(dataFolder, salesData)
     purchaseData = mm.getPurchasesData(dataFolder)
-    enrichedPurchaseData = mm.enrichSalesData(dataFolder, salesData)
+    enrichedPurchaseData = mm.enrichPurchaseData(dataFolder, salesData)
 
     for item in enrichedPurchaseData:
         window.update_idletasks()
