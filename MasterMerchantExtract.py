@@ -1,6 +1,7 @@
 import csv
 from datetime import datetime
 import MasterMerchant_helper as mm
+import MasterMerchant_flipCalculator as mmf
 from tkinter import *
 from tkinter import ttk
 from tkinter.filedialog import askdirectory, asksaveasfilename
@@ -44,20 +45,33 @@ def execute():
         item.pop('zosTax')
         item.pop('netSalePrice')
         item.pop('netSaleProfit')
-    with open(outFolder+f'\salesdata_{today}.csv', 'w', newline='') as f:
+
+    logger.info('Exporting enriched sales data...')
+    with open(outFolder+f'/salesdata_{today}.csv', 'w', newline='') as f:
         fields = list(enrichedSalesData[0].keys())
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
         for sale in enrichedSalesData:
             w.writerow(sale)
-    with open(outFolder+f'\purchasedata_{today}.csv', 'w', newline='') as f:
+    logger.info('Complete.')
+    logger.info('Exporting enriched purchase data...')
+    with open(outFolder+f'/purchasedata_{today}.csv', 'w', newline='') as f:
         fields = list(enrichedPurchaseData[0].keys())
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
         for sale in enrichedPurchaseData:
             w.writerow(sale)
-
-    logger.info('Export Completed.')
+    logger.info('Complete.')
+    flipData = mmf.getFlipData(enrichedSalesData, enrichedPurchaseData)
+    logger.info('Exporting flip sales data...')
+    with open(outFolder+'/flipdata_{}.csv'.format(today), 'w', newline='') as f:
+        fields = list(flipData[0].keys())
+        w = csv.DictWriter(f, fieldnames=fields)
+        w.writeheader()
+        for flip in flipData:
+            w.writerow(flip)
+    logger.info('Complete.')
+    logger.info('All Exports Completed.')
     return True
 
 window=Tk()
