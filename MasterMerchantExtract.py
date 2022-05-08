@@ -62,15 +62,19 @@ def execute():
         for sale in enrichedPurchaseData:
             w.writerow(sale)
     logger.info('Complete.')
-    flipData = mmf.getFlipData(enrichedSalesData, enrichedPurchaseData)
-    logger.info('Exporting flip sales data...')
-    with open(outFolder+'/flipdata_{}.csv'.format(today), 'w', newline='') as f:
-        fields = list(flipData[0].keys())
-        w = csv.DictWriter(f, fieldnames=fields)
-        w.writeheader()
-        for flip in flipData:
-            w.writerow(flip)
-    logger.info('Complete.')
+
+    try:
+        flipData = mmf.getFlipData(enrichedSalesData, enrichedPurchaseData)
+        logger.info('Exporting flip sales data...')
+        with open(outFolder+'/flipdata_{}.csv'.format(today), 'w', newline='') as f:
+            fields = list(flipData[0].keys())
+            w = csv.DictWriter(f, fieldnames=fields)
+            w.writeheader()
+            for flip in flipData:
+                w.writerow(flip)
+        logger.info('Complete.')
+    except Exception as e:
+        logger.error('There was an error extracing flip data: {}'.format(e))
     logger.info('All Exports Completed.')
     return True
 
