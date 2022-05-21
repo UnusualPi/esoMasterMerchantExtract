@@ -74,10 +74,7 @@ def getFlipData(enrichedSalesData, enrichedPurchaseData):
                 link['Sales Price'] = sale['price']
                 link['Net Sales Price'] = sale['netSaleProfit']
                 link['Profit'] = round(sale['netSaleProfit'] - purchase['price'],2)
-                if (sale['netSaleProfit'] - purchase['price']) > 0:
-                    link['Margin'] = round((sale['netSaleProfit'] - purchase['price']) / sale['netSaleProfit'],4)
-                else:
-                    link['Margin'] = round((sale['netSaleProfit'] - purchase['price']) / purchase['price'],4)
+                link['Margin'] = round((sale['netSaleProfit'] - purchase['price']) / sale['netSaleProfit'],4)
                 break
         link['saleId'] = link.get('saleId')
         if link['saleId'] != None:
