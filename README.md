@@ -7,7 +7,7 @@ Select your ESO "SavedVariables" folder. Usually in `C:\Users\Your User Name\Doc
 # Step 2:
 Select the folder to save the output files.
 # Step 3:
-Hit the "Execute" button.  This may take a while. When completed you'll have two files:
+Hit the "Execute" button.  This may take a while. When completed you'll have three files:
 1. `salesdata_YYYY-mm-dd.csv`
 1. `purchasedata_YYYY-mm-dd.csv`
 1. `flipdata_YYYY-mm-dd.csv`
