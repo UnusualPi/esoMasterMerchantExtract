@@ -45,6 +45,7 @@ def getFlipData(enrichedSalesData, enrichedPurchaseData):
                 'saleId'
                 'Purchase Datetime (UTC)':purchase['dateTime_UTC'],
                 'Sale Datetime (UTC)':None,
+                'Days in Play': None,
                 'ESO Week':None,
                 'Item Name':purchase['itemName'],
                 'itemType':None,
@@ -64,6 +65,7 @@ def getFlipData(enrichedSalesData, enrichedPurchaseData):
                     and sale['timestamp'] > purchase['timestamp']):
                 link['saleId'] = sale['id']
                 link['Sale Datetime (UTC)'] = sale['dateTime_UTC']
+                link['Days in Play'] = (sale['dateTime_UTC'] - purchase['dateTime_UTC']).days
                 link['ESO Week'] = sale['esoWeekStart']
                 link['itemType'] = sale['itemType']
                 link['itemQuality'] = sale['itemQuality']
