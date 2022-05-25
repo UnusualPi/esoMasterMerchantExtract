@@ -42,7 +42,7 @@ def getFlipData(enrichedSalesData, enrichedPurchaseData):
     flipLinks = []
     for purchase in enrichedPurchaseData:
         link = {'purchaseId':purchase['id'],
-                'saleId'
+                'saleId': None,
                 'Purchase Datetime (UTC)':purchase['dateTime_UTC'],
                 'Sale Datetime (UTC)':None,
                 'Days in Play': None,
