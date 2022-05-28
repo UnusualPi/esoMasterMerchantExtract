@@ -3,7 +3,9 @@ from datetime import datetime
 import MasterMerchant_helper as mm
 import MasterMerchant_flipCalculator as mmf
 from tkinter import *
-from tkinter import ttk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
+from tkinter.ttk import *
 from tkinter.filedialog import askdirectory, asksaveasfilename
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -78,44 +80,37 @@ def execute():
     logger.info('All Exports Completed.')
     return True
 
-window=Tk()
-
-menubar = Menu(window)
-filemenu = Menu(menubar, tearoff=0)
-filemenu.add_command(label="Exit", command=window.quit)
-
-aboutmenu = Menu(menubar, tearoff=0)
-aboutmenu.add_command(label="About", command=aboutWindow)
-
-menubar.add_cascade(label="File", menu=filemenu)
-window.config(menu=menubar)
+window = ttk.Window(themename="superhero")
 
 window.wm_title("MasterMerchant Data Extractor")
-window.grid_rowconfigure(0, weight=1, minsize=10) #Top Buffer
+window.grid_rowconfigure(0, weight=1, minsize=20) #Top Buffer
+window.grid_rowconfigure(2, weight=1, minsize=80) #Open Select Button Spacing
 window.grid_rowconfigure(4, weight=1, minsize=20) #Break
+window.grid_rowconfigure(6, weight=1, minsize=80) #Save select button spacing
 window.grid_rowconfigure(8, weight=1, minsize=20) #Break
-window.grid_rowconfigure(11, weight=1, minsize=10) #Bottom Buffer
-window.grid_columnconfigure(0, weight=1, minsize=10) #Left Buffer
-window.grid_columnconfigure(12, weight=1, minsize=10) #Break
-window.grid_columnconfigure(14, weight=1, minsize=10) #Right Buffer
+window.grid_rowconfigure(10, weight=1, minsize=80) #Execute select button spacing
+window.grid_rowconfigure(11, weight=1, minsize=20) #Bottom Buffer
+window.grid_columnconfigure(0, weight=1, minsize=20) #Left Buffer
+window.grid_columnconfigure(12, weight=1, minsize=20) #Break
+window.grid_columnconfigure(14, weight=1, minsize=20) #Right Buffer
 
 openLabel = Label(window, text='1. Select your Elder Scrolls "SavedVariables" folder:')
 openLabel.grid(row=1, column=1, sticky='W')
-open_button=Button(window,text="Select", height=1, width=10, command=selectVariablesFolder)
+open_button=Button(window,text="Select", width=10, command=selectVariablesFolder, bootstyle=SECONDARY)
 open_button.grid(row=2,column=1, rowspan=1, sticky='W')
 folderText = Text(window, height=1, width=75, wrap='none')
 folderText.grid(row=3, column=1, columnspan=11, sticky='NWSE')
 
 saveLabel = Label(window, text='2. Select your save folder:')
 saveLabel.grid(row=5, column=1, sticky='W')
-save_button=Button(window,text="Select", height=1, width=10, command=selectSaveLocation)
+save_button=Button(window,text="Select", width=10, command=selectSaveLocation, bootstyle=SECONDARY)
 save_button.grid(row=6,column=1, rowspan=1, sticky='W')
 saveText = Text(window, height=1, width=75, wrap='none')
 saveText.grid(row=7, column=1, columnspan=11, sticky='NWSE')
 
 executeLabel = Label(window, text='3. Execute:')
 executeLabel.grid(row=9, column=1, sticky='W')
-execute_button=Button(window,text="Execute", height=2, width=10, command=execute)
+execute_button=Button(window,text="Execute", width=10, command=execute, style="Accent.TButton")
 execute_button.grid(row=10,column=1, rowspan=1, sticky='W')
 
 window.mainloop()
