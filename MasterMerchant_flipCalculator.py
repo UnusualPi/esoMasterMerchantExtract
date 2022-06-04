@@ -4,8 +4,8 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def getFlipData(enrichedSalesData, enrichedPurchaseData):
-    sortedPurchaseData = sorted(enrichedPurchaseData, key=lambda i: i['timestamp'])
-    sortedSalesData = sorted(enrichedSalesData, key = lambda i: i['timestamp'])
+    sortedPurchaseData = sorted(enrichedPurchaseData, key=lambda i: (i['itemShortId'], i['timestamp']) , reverse=True)
+    sortedSalesData = sorted(enrichedSalesData, key = lambda i: (i['itemShortId'], i['timestamp']) , reverse=True)
     usr = enrichedPurchaseData[0]['buyerName']
     logger.info('Working on flip data for {}...'.format(usr))
     userSalesData = [s for s in enrichedSalesData if s['sellerName']==usr]
