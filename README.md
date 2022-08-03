@@ -13,14 +13,10 @@ Hit the "Execute" button.  This may take a while. When completed you'll have thr
 1. `flipdata_YYYY-mm-dd.csv`
 
 ## How does the "flip" calculation work?
-1. Order all sales and purchase data by timestamp and index by item type.
-  - Each item will be assigned an index location based on the time sold.
-1. Match the purchase item index to sale item index.
-  - For example, if I have 3 purchases of an item and 2 sales of that item.  The first two purchases will be matched to the 2 sales.
-  - If I have 3 purchases of an item and 4 sales of that item. The 3 purchases will be matched to the first 3 sales.
-  - If I have 4 purchases and 16 sales. The 4 purchases will be matched to the closest sale that occurs AFTER the purchase.
+1. Take each purchase, then find the immediately following sale of the same itemShortId and quantity.
+1. Remove the matched sale from future considerations in the event another purchase of the same item/quantity was made before the sale.
 
 ### What are the limitations of the flip calculation?
 1. For now, the calculation has to have the exact same quantity.
   - This means if you purchased 143 of an item, you have to sell that exact same quantity for the flip calculator to pick it up (can be a pain on flipping mats).
-1. The time frame isn't limited at this time.  Meaning, you could make a purchase 500 days ago then make a sale of the same item.  Technically, it is a flip but you may not have made the purchase with the intention to flip it.
+1. The time frame for matching a purchase to a sale is limited to 45 days.  Meaning a sales has to occur 45 days after a purchase in order to be counted as a "flip".  This can be changed in the code, but the binaries have no way to change in the UI.
