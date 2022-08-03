@@ -3,40 +3,12 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-def getFlipData(enrichedSalesData, enrichedPurchaseData):
+def getFlipData(enrichedSalesData, enrichedPurchaseData, days=45):
     sortedPurchaseData = sorted(enrichedPurchaseData, key=lambda i: (i['itemShortId'], i['timestamp']) , reverse=True)
     sortedSalesData = sorted(enrichedSalesData, key = lambda i: (i['itemShortId'], i['timestamp']) , reverse=True)
     usr = enrichedPurchaseData[0]['buyerName']
     logger.info('Working on flip data for {}...'.format(usr))
     userSalesData = [s for s in enrichedSalesData if s['sellerName']==usr]
-
-    logger.info('Indexing purchase data...')
-    itemShortId = 0
-    idx = 0
-    for purchase in enrichedPurchaseData:
-        if itemShortId == purchase['itemShortId']:
-            itemShortId = purchase['itemShortId']
-            idx+=1
-            purchase['idx'] = idx
-
-        else:
-            itemShortId = purchase['itemShortId']
-            idx = 0
-            purchase['idx'] = idx
-
-    logger.info('Indexing sales data...')
-    itemShortId = 0
-    idx = 0
-    for sale in userSalesData:
-        if itemShortId == sale['itemShortId']:
-            itemShortId = sale['itemShortId']
-            idx+=1
-            sale['idx'] = idx
-
-        else:
-            itemShortId = sale['itemShortId']
-            idx = 0
-            sale['idx'] = idx
 
     logger.info('Matching purchases to sales...')
     flipLinks = []
@@ -61,8 +33,8 @@ def getFlipData(enrichedSalesData, enrichedPurchaseData):
                 'Margin':None}
         for sale in userSalesData:
             if (sale['itemShortId'] == purchase['itemShortId']
-                    and sale['idx'] == purchase['idx']
-                    and sale['timestamp'] > purchase['timestamp']):
+                    and sale['timestamp'] > purchase['timestamp']
+                    and sale['timestamp'] - purchase['timestamp'] <= 86400*days):
                 link['saleId'] = sale['id']
                 link['Sale Datetime (UTC)'] = sale['dateTime_UTC']
                 link['Days in Play'] = (sale['dateTime_UTC'] - purchase['dateTime_UTC']).days
