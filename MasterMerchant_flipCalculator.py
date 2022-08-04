@@ -34,6 +34,7 @@ def getFlipData(enrichedSalesData, enrichedPurchaseData, days=45):
         for sale in userSalesData:
             if (sale['itemShortId'] == purchase['itemShortId']
                     and sale['timestamp'] > purchase['timestamp']
+                    and sale['quant'] == purchase['quant']
                     and sale['timestamp'] - purchase['timestamp'] <= 86400*days):
                 link['saleId'] = sale['id']
                 link['Sale Datetime (UTC)'] = sale['dateTime_UTC']
